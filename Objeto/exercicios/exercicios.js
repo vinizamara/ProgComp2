@@ -86,4 +86,52 @@ function exercicio2(){
     console.log("A empresa possui: ", funcionariosGerentes, " funcionários no cargo de gerente")
 }
 
+function exercicio3(){
+    let projetos = []
+
+    for (i = 0; i < 3; i++){
+        let projeto = {
+            nomeProjeto: prompt(`Qual o nome do projeto ${i + 1}?`),
+            empresa: prompt(`Qual o nome da empresa do projeto ${i + 1}?`).toLowerCase(),
+            duracaoMeses: Number(prompt(`Qual a duração de desenvolvimento do projeto ${i + 1} em quantidade de meses?`)),
+            orcamento: parseFloat(prompt(`Qual foi o orçamento, em reais, para o projeto ${i + 1}`))
+        }
+
+        projetos.push(projeto)
+    }
+
+    let duracaoMesesEOrcamento = []
+    let maiorOrcamento = projetos[0].orcamento
+    let maiorOrcamentoNome = projetos[0].nomeProjeto
+    let somaDuracao = 0
+    let projetosInova = 0
+    let totalGasto = 0
+
+    for (i = 0; i < projetos.length; i++){
+        if (projetos[i].duracaoMeses > 12 && projetos[i].orcamento > 1000000.00){
+            duracaoMesesEOrcamento.push(projetos[i].nomeProjeto)
+        }
+        if (projetos[i].orcamento > maiorOrcamento){
+            maiorOrcamento = projetos[i].orcamento
+            maiorOrcamentoNome = projetos[i].nomeProjeto
+        }
+        somaDuracao += projetos[i].duracaoMeses
+        if (projetos[i].empresa == "inovatech"){
+            projetosInova++
+        }
+        if(projetos[i].duracaoMeses < 6){
+            totalGasto += projetos[i].orcamento
+        }
+    }
+
+    let mediaDuracao = somaDuracao/projetos.length
+
+    console.log(`Todos os projetos cadrastados: `, projetos)
+    console.log(`Os projetos cadastrados que possuem duração maior que 12 meses e orçamento maior que R$1.000.000,00 são: ${duracaoMesesEOrcamento}`)
+    console.log(`O maior orçamento dentre os projetos mencionados foi o projeto: ${maiorOrcamentoNome}`)
+    console.log(`A média de duração dos projetos foi ${mediaDuracao} meses`)
+    console.log(`A empresa InovaTech desenvolveu ${projetosInova} projetos`)
+    console.log(`O total gasto em orçamentos para prjetos com tempo de duração menor que 6 meses é: ${totalGasto}`)
+}
+
 
