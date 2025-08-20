@@ -31,12 +31,18 @@ function exercicio1(){
 
 function exercicio2(){
     let matriz = []
+    let nomeVendedor = []
+
+    
+    for(let i = 0; i < 4; i++){
+        nomeVendedor[i] = prompt(`Digite o nome do vendedor ${i+1}: `)
+    }
 
     for(let i = 0; i < 4; i++){
         matriz[i] = []
         for(let j = 0; j < 7; j++){
-            //matriz[i][j] = parseInt(Math.random() * 100)
-            matriz[i][j] = Number(prompt(`Forneça o valor das vendas do funcionario ${i+1}, no dia ${j+1}: `))
+            matriz[i][j] = parseInt(Math.random() * 100)
+            //matriz[i][j] = Number(prompt(`Forneça o valor das vendas do funcionario ${i+1}, no dia ${j+1}: `))
         }
     }
 
@@ -50,7 +56,7 @@ function exercicio2(){
                 maior = matriz[i][j]
             }
         }
-        console.log(`A soma de vendas do vendedor ${i+1} é: R$${somaLinha}`)
+        console.log(`A soma de vendas do vendedor ${nomeVendedor[i]} é: R$${somaLinha}`)
         somaLinha = 0
     }
 
