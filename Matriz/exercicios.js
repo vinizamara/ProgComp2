@@ -78,3 +78,74 @@ function exercicio2(){
     console.log(`A média dos valores foi: R$${mediaTotal.toFixed(2)}`)
     console.log(matriz)
 }
+
+function exercicio3(){
+    let matriz = []
+    let regiao = ["Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"]
+    let dias = [10, 11, 12, 13, 14]
+
+    for (l = 0; l < 5; l++){
+        matriz[l] = []
+        for (c = 0; c < 5; c++){
+            do{
+                matriz[l][c] = Number(prompt(`Forneça o valor de poluição (entre 0 e 500) da região ${regiao[l]} no dia ${dias[c]}: `))
+            } while (matriz[l][c] < 0 || matriz[l][c] > 500)
+        }
+    }
+
+    let diagonalPrincipal = []
+    let diagonalPrincipalSoma = 0
+    let diagonalSecundaria = []
+    let diagonalSecundariaSoma = 0
+    for (l = 0; l < 5; l++){
+        diagonalPrincipal[l] = matriz[l][l]
+        diagonalPrincipalSoma += matriz[l][l]
+        diagonalSecundaria[l] = matriz[l][4-l]
+        diagonalSecundariaSoma += matriz[l][4-l]
+    }
+    let diagonalPrincipalMedia = diagonalPrincipalSoma / diagonalPrincipal.length
+    let diagonalSecundariaMedia = diagonalSecundariaSoma / diagonalSecundaria.length
+
+    let maiorIndice = matriz[0][0]
+    let maiorIndiceRegiao = regiao[0]
+    let maiorIndiceDia = dias[0]
+    let maior300 = 0
+    let menorPoluicaoRegiaoSoma = 0
+    let poluicaoRegiaoMediaLinha = []
+    for (l = 0; l < 5; l++){
+        for (c = 0; c < 5; c++){
+            if(maiorIndice < matriz[l][c]){
+                maiorIndice = matriz[l][c]
+                maiorIndiceRegiao = regiao[l]
+                maiorIndiceDia = dias[c]
+            }
+
+            if (matriz[l][c] > 300){
+                maior300++;
+            }
+            
+            menorPoluicaoRegiaoSoma += matriz[l][c]
+        }
+        menorPoluicaoRegiaoMedia = menorPoluicaoRegiaoSoma / matriz.length
+        poluicaoRegiaoMediaLinha[l] = menorPoluicaoRegiaoMedia
+        menorPoluicaoRegiaoSoma = 0
+        menorPoluicaoRegiaoMedia = 0
+    }
+
+    let menorPoluicaoRegiaoMedia = poluicaoRegiaoMediaLinha[0]
+    for (l = 0; l < 5; l++){
+        if (menorPoluicaoRegiaoMedia > poluicaoRegiaoMediaLinha[l]){
+            menorPoluicaoRegiaoMedia = poluicaoRegiaoMediaLinha[l]
+        }
+    }
+    
+    console.log(matriz)
+    console.log(`Os valores da diagonal principal são: ${diagonalPrincipal} \n 
+    Já a média desses valores é: ${diagonalPrincipalMedia.toFixed(2)}`)
+    console.log(`Os valores da diagonal secundária são: ${diagonalSecundaria} \n 
+    Já a média desses valores é: ${diagonalSecundariaMedia.toFixed(2)}`)
+    console.log(`O maior índice de de poluição foi: ${maiorIndice} \n 
+    Ele ocorreu na região ${maiorIndiceRegiao} no dia ${maiorIndiceDia}`)
+    console.log(`O nível de poluição passou de 300 em ${maior300} dias diferentes`)
+    console.log()
+}
