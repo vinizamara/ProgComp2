@@ -109,9 +109,9 @@ function exercicio3(){
     let maiorIndice = matriz[0][0]
     let maiorIndiceRegiao = regiao[0]
     let maiorIndiceDia = dias[0]
-    let maior300 = 0
-    let menorPoluicaoRegiaoSoma = 0
-    let poluicaoRegiaoMediaLinha = []
+    let maiorQue300 = 0
+    let menorPoluicaoSemanalSoma = 0
+    let poluicaoSemanalMedia = []
     for (l = 0; l < 5; l++){
         for (c = 0; c < 5; c++){
             if(maiorIndice < matriz[l][c]){
@@ -121,21 +121,21 @@ function exercicio3(){
             }
 
             if (matriz[l][c] > 300){
-                maior300++;
+                maiorQue300++;
             }
             
-            menorPoluicaoRegiaoSoma += matriz[l][c]
+            menorPoluicaoSemanalSoma += matriz[l][c]
         }
-        menorPoluicaoRegiaoMedia = menorPoluicaoRegiaoSoma / matriz.length
-        poluicaoRegiaoMediaLinha[l] = menorPoluicaoRegiaoMedia
-        menorPoluicaoRegiaoSoma = 0
-        menorPoluicaoRegiaoMedia = 0
+        poluicaoSemanalMedia[l] = menorPoluicaoSemanalSoma / matriz.length
+        menorPoluicaoSemanalSoma = 0
     }
 
-    let menorPoluicaoRegiaoMedia = poluicaoRegiaoMediaLinha[0]
+    let menorPoluicaoSemanalMediaValor = poluicaoSemanalMedia[0]
+    let menorPoluicaoSemanalRegiao = regiao[0]
     for (l = 0; l < 5; l++){
-        if (menorPoluicaoRegiaoMedia > poluicaoRegiaoMediaLinha[l]){
-            menorPoluicaoRegiaoMedia = poluicaoRegiaoMediaLinha[l]
+        if (menorPoluicaoSemanalMediaValor > poluicaoSemanalMedia[l]){
+            menorPoluicaoSemanalRegiao = regiao[l]
+            menorPoluicaoSemanalMediaValor = poluicaoSemanalMedia[l]
         }
     }
     
@@ -144,8 +144,9 @@ function exercicio3(){
     Já a média desses valores é: ${diagonalPrincipalMedia.toFixed(2)}`)
     console.log(`Os valores da diagonal secundária são: ${diagonalSecundaria} \n 
     Já a média desses valores é: ${diagonalSecundariaMedia.toFixed(2)}`)
-    console.log(`O maior índice de de poluição foi: ${maiorIndice} \n 
+    console.log(`O maior índice de poluição foi: ${maiorIndice} \n 
     Ele ocorreu na região ${maiorIndiceRegiao} no dia ${maiorIndiceDia}`)
-    console.log(`O nível de poluição passou de 300 em ${maior300} dias diferentes`)
-    console.log()
+    console.log(`O nível de poluição passou de 300 em ${maiorQue300} dias diferentes`)
+    console.log(`A região com menor indice de poluição semanal foi: ${menorPoluicaoSemanalRegiao},
+    \n tendo uma média de ${menorPoluicaoSemanalMediaValor.toFixed(2)} de radiação`)
 }
