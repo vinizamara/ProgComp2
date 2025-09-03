@@ -20,3 +20,14 @@ frase.toUpperCase().includes('ESTU')
 frase.slice(0,5)
 //Começa ao contrario
 frase.slice(-5)
+
+//Retira espaços do começo e do fim da frase
+frase.trim()
+
+//Divide a frase com base em cada espaço
+frase.split(" ")
+
+//Junta os elementos de um vetor
+let vetorFrase =["a", "b"]
+vetorFrase.join(",")
+
