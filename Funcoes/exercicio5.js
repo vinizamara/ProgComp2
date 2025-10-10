@@ -9,7 +9,7 @@ function cadastroInicial(vetor){
 function cadastrarFuncionario(vetor) {
     let nome = prompt(`Qual o nome do novo funcionário?`)
     let cargo = prompt(`Qual o cargo do novo fucionário?`)
-    let salario = Number(prompt(`Qual o curso do novo funcionário?`))
+    let salario = Number(prompt(`Qual o salario do novo funcionário?`))
     vetor.push({ nome: nome, cargo: cargo, salario: salario})
 }
 
@@ -67,7 +67,32 @@ function mediaSalarial(vetor){
         soma += vetor[i].salario
     }
     let media = soma / vetor.length
-    alert(`A Media Salarial dos funcinários é: ${mediaSalarial}`)
+    alert(`A Media Salarial dos funcinários é: ${media}`)
+    return media
+}
+
+function promoverCargo(vetor){
+    let media = mediaSalarial(vetor)
+    for (let i = 0; i < vetor.length; i++){
+        if (vetor[i].salario < media){
+            vetor[i].cargo = "Analista Júnior"
+            vetor[i].salario = vetor[i].salario * 1.15
+        }
+    }
+    alert("Funcionários Promovidos!!!")
+}
+
+function maiorSalario(vetor){
+    let maior = vetor[0].salario
+    let nomeMaior = vetor[0].nome
+    for (let i = 0; i < vetor.length; i++){
+        if (maior < vetor[i].salario){
+            maior = vetor[i].salario
+            nomeMaior = vetor[i].nome
+        }
+    }
+    alert(`O funcionário com maior salário é o ${nomeMaior}, tendo um salário de R$${maior.toFixed(2)}`)
+    return nomeMaior, maior
 }
 
 function main(){
@@ -77,7 +102,7 @@ function main(){
 
     let opcao
     do {
-        opcao = Number(prompt(`Qual opção você deseja?\n1. Cadastrar novo funcionário\n2.Listar todos os nomes dos funcionários\n3. Aumentar o salário de todos em 10%\n4. Buscar salário pelo nome\n5. Atualizar cargo de um funcionário\n6. Remover funcionário pelo nome\n7. Exibir média salarial da empresa\n 8. Encerrar programa`))
+        opcao = Number(prompt(`Qual opção você deseja?\n1. Cadastrar novo funcionário\n2.Listar todos os nomes dos funcionários\n3. Aumentar o salário de todos em 10%\n4. Buscar salário pelo nome\n5. Atualizar cargo de um funcionário\n6. Remover funcionário pelo nome\n7. Exibir média salarial da empresa\n8.Promover funcionários\n9. Exibir funionário com maior salário\n10. Encerrar programa`))
         switch(opcao){
             case 1:
                 cadastrarFuncionario(funcionarios)
@@ -101,14 +126,20 @@ function main(){
             case 7:
                 mediaSalarial(funcionarios)
                 break
-            case 8: 
+            case 8:
+                promoverCargo(funcionarios)
+                break
+            case 9:
+                maiorSalario(funcionarios)
+                break
+            case 10: 
                 alert(`Programa encerrado!`)
                 break
             default:
                 alert(`Opção Inválida`)
                 break
         }
-    } while (opcao != 8)
+    } while (opcao != 10)
 
     console.log(funcionarios)
 }
