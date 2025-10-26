@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Postagens com API Pública</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #222;
+            text-align: center;
+        }
+
+        h3 {
+            text-align: center;
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            width: 80px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #00d761;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #00d761;
+        }
+
+        div {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        li {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            line-height: 1.5;
+        }
+
+        li strong {
+            color: #00d761;
+        }
+    </style>
+</head>
+<body>
+    <h1>Listagem de Postagens</h1>
+    <h3>Quantas postagens você deseja mostrar?</h3>
+    <div style="text-align: center;">
+        <input type="number" id="numPostagens" value="0" min="1">
+        <button onclick="carregarPostagens()">Carregar Postagens</button>
+    </div>
+
+    <div>
+        <ul id="listaPostagens"></ul>
+    </div>
+
+    <script>
+        async function carregarPostagens() {
+            try {
+                const numPostagens = document.getElementById("numPostagens").value;
+                const resposta = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${numPostagens}`);
+                const postagens = await resposta.json(); 
+                const lista = document.getElementById("listaPostagens");
+                lista.innerHTML = "";
+
+                for (const postagem of postagens) {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<strong>${postagem.title}</strong><br>${postagem.body}`;
+                    lista.appendChild(li);
+                }
+            } catch (error) {
+                console.error("Erro ao carregar postagens:", error);
+                alert("Não foi possível carregar as postagens da API.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -6,20 +6,23 @@
 </head>
 <body>
   <h1>Lista de Imagens</h1>
+  <h3>Quantas imagens você deseja mostrar?</h3>
+  <input type="number" id="quantImagens" value="0">
   <button onclick="carregarImagens()">Carregar Imagens</button>
   <ul id="listaImagens"></ul>
 
   <script>
     async function carregarImagens() {
       try {
-        const resposta = await fetch("https://jsonplaceholder.typicode.com/photos?_limit=10");
+        const quantImagens = document.getElementById("quantImagens").value
+        const resposta = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=${quantImagens}`);
         const imagens = await resposta.json(); 
         const lista = document.getElementById("listaImagens");
         lista.innerHTML = "";
 
         for (const imagem of imagens) {
           const li = document.createElement("li");
-          li.textContent = `Nome: ${imagem.title}`;
+          li.textContent = `Titulo da Imagem: ${imagem.title} / Imagem:`;
 
           const img = document.createElement("img");
           img.src = imagem.thumbnailUrl;

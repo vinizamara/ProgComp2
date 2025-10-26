@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesquisador de Filmes com API Pública</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #e9f9ef, #dff0ff);
+      margin: 0;
+      padding: 30px 15px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #006e3b;
+      margin-bottom: 8px;
+      font-size: 2rem;
+    }
+
+    h3 {
+      text-align: center;
+      color: #555;
+      font-weight: normal;
+      margin-bottom: 25px;
+    }
+
+    /* 🔍 Campo de busca */
+    .busca-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      padding: 10px 14px;
+      width: 260px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #00d761;
+      outline: none;
+      box-shadow: 0 2px 8px rgba(0, 215, 97, 0.3);
+    }
+
+    button {
+      padding: 10px 18px;
+      background-color: #00d761;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background 0.3s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: #00b852;
+      transform: scale(1.03);
+    }
+
+    /* 🎞️ Lista de filmes */
+    #listaFilmes {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    li {
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    li:hover {
+      transform: translateY(-4px);
+    }
+
+    li img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    li strong {
+      color: #00d761;
+      font-size: 1.1rem;
+    }
+
+    li span {
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      li img {
+        height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎬 Pesquisador de Filmes</h1>
+  <h3>Digite o título do filme que deseja encontrar</h3>
+
+  <div class="busca-container">
+    <input type="text" id="titulo" placeholder="Ex: Matrix, Batman, Avatar...">
+    <button onclick="procurarFilme()">🔍 Buscar</button>
+  </div>
+
+  <ul id="listaFilmes"></ul>
+
+  <script>
+    async function procurarFilme() {
+      try {
+        const titulo = document.getElementById("titulo").value.trim();
+        const lista = document.getElementById("listaFilmes");
+        lista.innerHTML = "";
+
+        if (!titulo) {
+          alert("Por favor, digite um título para pesquisar.");
+          return;
+        }
+
+        const resposta = await fetch(`https://www.omdbapi.com/?apikey=3f706620&s=${titulo}`);
+        const filmes = await resposta.json();
+
+        if (filmes.Response === "True" && Array.isArray(filmes.Search)) {
+          for (const filme of filmes.Search) {
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <img src="${filme.Poster}" alt="Imagem não encontrada ou não disponivel"><br>
+              <strong>${filme.Title}</strong><br>
+              <span>${filme.Year} • ${filme.Type.toUpperCase()}</span>
+            `;
+            lista.appendChild(li);
+          }
+        } else {
+          const li = document.createElement("li");
+          li.textContent = "Nenhum filme encontrado. Tente outro título.";
+          lista.appendChild(li);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar filmes:", error);
+        alert("Não foi possível carregar os filmes da API.");
+      }
+    }
+  </script>
+</body>
+</html>
