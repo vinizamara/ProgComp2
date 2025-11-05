@@ -24,5 +24,17 @@ console.log(`A média das notas foi: ${(soma/notas.length).toFixed(2)}`)
 console.log(`O número de alunos aprovados foi: ${aprovados}`)
 console.log(`As notas do vetor que estavam nas posições pares eram: ${notasPosicoesPares}`)
 
+/* Função forEach com arrow function:
+notas.forEach((nota, i) => {
+    console.log(nota.toFixed(2))
+    soma += nota
 
+    if (nota >= 7){
+        aprovados++
+    }
+     if (i % 2 == 0){
+        notasPosicoesPares.push(nota.toFixed(2))
+    }
+})
+*/
 
