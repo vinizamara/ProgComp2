@@ -10,8 +10,32 @@ let vendas = [
 ];
 
 let total = 0
-vendas.forEach( (venda, i) => {
-    total += venda.valor * venda.quantidade
+let categoriaVendas = []
+vendas.forEach( (venda) => {
+    soma = 0
+    vendas.forEach( (produto) => {
+        if (venda.categoria == produto.categoria){
+            soma += produto.valor * produto.quantidade
+        }
+    })
+    categoriaVendas.push({
+        categoria: venda.categoria, valorTotal: soma
+    })
 })
 
-console.log("O valor total de vendas foi:", total)
+// Função para remover categorias repetidas
+let categoriaVendasFiltradas = categoriaVendas.filter( (venda, i) => {
+    return categoriaVendas.findIndex(v => v.categoria == venda.categoria) === i
+})
+
+let maior = categoriaVendasFiltradas[0].valorTotal
+let indice = 0
+categoriaVendasFiltradas.forEach( (venda, i) => {
+    if (venda.valorTotal > maior){
+        maior = venda.valorTotal
+        indice = i
+    }
+})
+
+console.log("Os valores totais de vendas por categoria foram: ", categoriaVendasFiltradas)
+console.log(`A categoria '${categoriaVendasFiltradas[indice].categoria}' teve o maior valor de venda total, sendo ele: ${maior}`)
